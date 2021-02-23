@@ -9,17 +9,19 @@ import UIKit
 import WebKit
 
 class WebViewController: UIViewController, WKNavigationDelegate {
-    @IBOutlet weak var webKit: WKWebView!
     
-
+    //MARK: - Variables && Outlets
+    @IBOutlet weak var webKit: WKWebView!
     var urlString = String()
     
+    //MARK: - Load View
     override func loadView() {
         webKit = WKWebView()
         webKit.navigationDelegate = self
         view = webKit
     }
     
+    //MARK: - View Did load
     override func viewDidLoad() {
         super.viewDidLoad()
         title.self = "Web View"
@@ -30,9 +32,9 @@ class WebViewController: UIViewController, WKNavigationDelegate {
         
         webKit.load(URLRequest(url: url))
         webKit.allowsBackForwardNavigationGestures = true
-        
     }
     
+    //MARK: - Web View - func
     func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
         print("Navigation is started")
     }
@@ -40,16 +42,5 @@ class WebViewController: UIViewController, WKNavigationDelegate {
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         print("Navigation is stopped")
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
 

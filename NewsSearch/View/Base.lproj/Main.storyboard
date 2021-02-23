@@ -281,6 +281,7 @@
                     <connections>
                         <outlet property="articleImageView" destination="uz1-e5-KAY" id="uQ1-wN-7cH"/>
                         <outlet property="descriptionTextView" destination="LP2-pt-21N" id="thA-pJ-DDL"/>
+                        <outlet property="readFullArticleButton" destination="fsg-6r-0St" id="LrV-d0-v1C"/>
                         <outlet property="titleLabelTextView" destination="3Gw-Go-Yzy" id="wpw-hb-u2G"/>
                     </connections>
                 </viewController>
@@ -333,7 +334,7 @@
                     <tabBarItem key="tabBarItem" title="Item" selectedImage="newspaper" catalog="system" id="7XN-Eo-sHA"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="5iN-gD-yhc">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
