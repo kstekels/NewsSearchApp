@@ -10,6 +10,7 @@ import Gloss
 
 class Items: JSONDecodable {
     
+    var status: String
     var title: String
     var description: String
     var url: String
@@ -18,6 +19,7 @@ class Items: JSONDecodable {
     var image: UIImage?
     
     required init?(json: JSON) {
+        self.status = "status" <~~ json ?? ""
         self.title = "title" <~~ json ?? ""
         self.description = "description" <~~ json ?? ""
         self.url = "url" <~~ json ?? ""

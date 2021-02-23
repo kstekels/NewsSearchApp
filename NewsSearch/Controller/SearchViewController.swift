@@ -9,18 +9,29 @@ import UIKit
 
 class SearchViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, UITextFieldDelegate {
 
-    var topics = ["bitcoin", "apple", "tesla", "spacex", "bmw", "volvo", "audi", "amazon", "telegram", "facebook", "whatsapp", "windows", "android "]
+    var topics = ["bitcoin", "apple", "tesla", "bmw", "volvo", "audi", "amazon", "telegram", "facebook", "whatsapp", "windows", "android "].sorted()
     
-    var selectedTopic = ""
+    var selectedTopic = String()
+    var saveLastIndex = 0
     
     @IBOutlet weak var dataPickerView: UIPickerView!
     @IBOutlet weak var manualSearchTextField: UITextField!
+    @IBOutlet weak var shortcutSearchButton: UIButton!
+    @IBOutlet weak var keywordSearchButton: UIButton!
+    @IBOutlet weak var searchButtonInfoLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+            
         dataPickerView.dataSource = self
         dataPickerView.delegate = self
         dataPickerView.delegate = self
+        
+        selectedTopic = topics[0]
+        manualSearchTextField.placeholder = "Search by keywords here..."
+        shortcutSearchButton.layer.cornerRadius = 15
+        shortcutSearchButton.backgroundColor = .systemFill
+        searchButtonInfoLabel.text = "Search for:  \"\(selectedTopic.capitalized)\"? 🤔"
         
         
     }
@@ -53,6 +64,7 @@ class SearchViewController: UIViewController, UIPickerViewDataSource, UIPickerVi
         addShortcutToDataPicker()
     }
     
+    
     func goToDetailedTableview() {
         let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
         guard let vc = storyboard.instantiateViewController(identifier: "NewsViewControllerID") as? NewsViewController else {
@@ -83,35 +95,42 @@ class SearchViewController: UIViewController, UIPickerViewDataSource, UIPickerVi
         let addAction = UIAlertAction(title: "Delete -> 🗑?", style: .destructive) { [self] _ in
             
             if deleteTextField.text?.lowercased() == "delete"{
-                self.topics.remove(at: (self.topics.firstIndex(of: selectedTopic) ?? self.topics.firstIndex(of: self.topics.last!))!)
+                var itemToDelete = self.topics.firstIndex(of: selectedTopic)
+                if itemToDelete == nil{
+                    itemToDelete = saveLastIndex
+                }else{
+                    self.saveLastIndex = itemToDelete!
+                }
+                self.topics.remove(at: (itemToDelete!))
                 self.dataPickerView.reloadAllComponents()
                 
             }else{
-                deleteTextField.placeholder = "You mustenter \"Delete\", to delete selected item!"
+                deleteTextField.placeholder = "You must enter \"Delete\", to delete selected item!"
             }
         }
-        
-//        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-        
+                
         deleteShortcutAlert.addAction(addAction)
-//        deleteShortcutAlert.addAction(cancelAction)
         
         present(deleteShortcutAlert, animated: true, completion: nil)
         
     }
     
+    func pickerSelected() {
+        searchButtonInfoLabel.text = "Search for:  \"\(selectedTopic.capitalized)\"? 🤔"
+    }
     
     func addShortcutToDataPicker() {
         let addShortcutAlert = UIAlertController(title: "Add  a new shortcut", message: "Enter a new shortcut to access from Picker View!", preferredStyle: .alert)
         var shortcutTextField: UITextField!
         
-        let addAction = UIAlertAction(title: "✚", style: .default) { [self] _ in
+        let addAction = UIAlertAction(title: "Add", style: .default) { [self] _ in
             guard let newItem = shortcutTextField.text, !newItem.isEmpty else { return }
             
             if self.topics.contains(newItem.lowercased()) {
                 print("Element already exist!")
             }else{
                 self.topics.append(newItem.lowercased())
+                self.topics.sort()
                 self.dataPickerView.reloadAllComponents()
                 print("Element is added to list")
             }
@@ -146,7 +165,8 @@ class SearchViewController: UIViewController, UIPickerViewDataSource, UIPickerVi
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        selectedTopic = topics[row]
+        selectedTopic = self.topics[row]
+        pickerSelected()
     }
 
 

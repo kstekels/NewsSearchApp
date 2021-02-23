@@ -16,28 +16,72 @@ class NewsViewController: UIViewController {
     var items: [Items] = []
     var newsTopic = String()
     var image = UIImage()
+    var animationIsShowedOnce = Bool()
+    var totalResult = Int()
+    var titleText = String()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.delegate = self
-        self.title = ("\(newsTopic.capitalized)🔍")
+        animationIsShowedOnce = false
         getDataFromJson()
         tableView.rowHeight = 100
         tableView.estimatedRowHeight = 100
         tableView.dataSource = self
+        tableView.isSkeletonable = true
+        tableView.showAnimatedGradientSkeleton(usingGradient: .init(baseColor: .link), animation: nil, transition: .crossDissolve(0.25))
     }
     
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        tableView.isSkeletonable = true
-        tableView.showAnimatedGradientSkeleton(usingGradient: .init(baseColor: .link), animation: nil, transition: .crossDissolve(0.25))
+        animatedTitle()
+    }
+    
+    func animatedTitle(){
+        if !animationIsShowedOnce{
+            Timer.scheduledTimer(withTimeInterval: 0.2, repeats: false) { (timer) in
+                self.title = ""
+                var charIndex = 0.0
+                if self.totalResult > 0{
+                    self.titleText = "Results for: \(self.newsTopic.capitalized)"
+                }else{
+                    self.tableView.isHidden = true
+                    self.ifNothingFound(for: "\(self.newsTopic.capitalized)")
+                }
+                for letter in self.titleText{
+                    Timer.scheduledTimer(withTimeInterval: 0.1 * charIndex, repeats: false) { (timer) in
+                        self.title?.append(letter)
+                    }
+                    charIndex += 1
+                }
+                self.animationIsShowedOnce = true
+            }
+        }
+        
+        
+        
     }
 
+    func ifNothingFound(for search: String) {
+        let alert = UIAlertController(title: "Sorry!", message: "We found nothing for: \"\(search)\"", preferredStyle: .alert)
+        let closeAction = UIAlertAction(title: "Close", style: .default) { _ in
+            let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
+            guard let vc = storyboard.instantiateViewController(identifier: "SearchViewControllerID") as? SearchViewController else {
+                return
+            }
+            
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
+        
+        alert.addAction(closeAction)
+        
+        present(alert, animated: true)
+    }
 
     
     func getDataFromJson() {
-        let jsonURL = "https://newsapi.org/v2/everything?q=\(newsTopic)&apiKey=a473de0095844441bc54bd266083c4f3"
+        let jsonURL = "https://newsapi.org/v2/everything?q=\(newsTopic)&language=en&apiKey=a473de0095844441bc54bd266083c4f3"
         
         guard let url = URL(string: jsonURL) else {
             return
@@ -64,22 +108,19 @@ class NewsViewController: UIViewController {
             do{
                 if let dictData = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] {
                     print("dictData:", dictData)
+                    self.totalResult = dictData["totalResults"] as! Int
                     self.populateData(dictData)
                 }
             }catch{
                 print("Error coverting JSON")
-                
             }
-            
-            
         }
         task.resume()
-        
-        
-        
-        
-        
     }
+    
+    
+    
+
     
     func populateData(_ dict: [String: Any]){
         guard let responseDict = dict["articles"] as? [Gloss.JSON] else {
@@ -91,13 +132,12 @@ class NewsViewController: UIViewController {
         DispatchQueue.main.async {
             self.tableView.stopSkeletonAnimation()
             self.view.hideSkeleton(reloadDataAfter: true, transition: .crossDissolve(0.25))
-            
             self.tableView.reloadData()
+
         }
         
     }
-    
-    
+     
 
 }
 
@@ -111,6 +151,7 @@ extension NewsViewController: UITableViewDelegate, SkeletonTableViewDataSource {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
+        
         return items.count
     }
     
@@ -130,12 +171,17 @@ extension NewsViewController: UITableViewDelegate, SkeletonTableViewDataSource {
             cell.imageViewForCell.image = image
         }
         cell.titleLabelForCell.text = item.title
-
+        
+        
+        if items.count == 0{
+            self.presentingViewController?.dismiss(animated: true)
+        }
+        
         return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 100
+        return 80
     }
     
 
@@ -160,17 +206,9 @@ extension NewsViewController: UITableViewDelegate, SkeletonTableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+
         //Animation
-//        let rotationTransform = CATransform3DTranslate(CATransform3DIdentity, -500, 10, 0)
-//        cell.layer.transform = rotationTransform
-//        cell.alpha = 0.3
-//
-//        UIView.animate(withDuration: 0.7){
-//            cell.layer.transform = CATransform3DIdentity
-//            cell.alpha = 1
-//        }
-        
-        let rotationTransform = CATransform3DTranslate(CATransform3DIdentity, 0, 50, 0)
+        let rotationTransform = CATransform3DTranslate(CATransform3DIdentity, -30, 50, 20)
         cell.layer.transform = rotationTransform
         cell.alpha = 0
         UIView.animate(withDuration: 0.75){
@@ -180,61 +218,7 @@ extension NewsViewController: UITableViewDelegate, SkeletonTableViewDataSource {
         
     }
 
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
 
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 }
-
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 

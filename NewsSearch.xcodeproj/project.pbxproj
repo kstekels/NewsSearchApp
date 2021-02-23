@@ -18,6 +18,8 @@
 		1535642425E4608C004838EC /* Gloss in Frameworks */ = {isa = PBXBuildFile; productRef = 1535642325E4608C004838EC /* Gloss */; };
 		1535642825E460BD004838EC /* SkeletonView in Frameworks */ = {isa = PBXBuildFile; productRef = 1535642725E460BD004838EC /* SkeletonView */; };
 		1535642C25E460DF004838EC /* items.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1535642B25E460DF004838EC /* items.swift */; };
+		1588C4FE25E54D9900FFE351 /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = 1588C4FD25E54D9900FFE351 /* Realm */; };
+		1588C50025E54D9900FFE351 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 1588C4FF25E54D9900FFE351 /* RealmSwift */; };
 		159B122E25E46AE800EBFBD8 /* ArticleDetailedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 159B122D25E46AE800EBFBD8 /* ArticleDetailedViewController.swift */; };
 		159B123125E46B5100EBFBD8 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 159B123025E46B5100EBFBD8 /* WebViewController.swift */; };
 /* End PBXBuildFile section */
@@ -43,6 +45,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1588C50025E54D9900FFE351 /* RealmSwift in Frameworks */,
+				1588C4FE25E54D9900FFE351 /* Realm in Frameworks */,
 				1535642825E460BD004838EC /* SkeletonView in Frameworks */,
 				1535642425E4608C004838EC /* Gloss in Frameworks */,
 			);
@@ -137,6 +141,8 @@
 			packageProductDependencies = (
 				1535642325E4608C004838EC /* Gloss */,
 				1535642725E460BD004838EC /* SkeletonView */,
+				1588C4FD25E54D9900FFE351 /* Realm */,
+				1588C4FF25E54D9900FFE351 /* RealmSwift */,
 			);
 			productName = NewsSearch;
 			productReference = 153563FE25E45DB2004838EC /* NewsSearch.app */;
@@ -168,6 +174,7 @@
 			packageReferences = (
 				1535642225E4608C004838EC /* XCRemoteSwiftPackageReference "Gloss" */,
 				1535642625E460BD004838EC /* XCRemoteSwiftPackageReference "SkeletonView" */,
+				1588C4FC25E54D9900FFE351 /* XCRemoteSwiftPackageReference "realm-cocoa" */,
 			);
 			productRefGroup = 153563FF25E45DB2004838EC /* Products */;
 			projectDirPath = "";
@@ -421,6 +428,14 @@
 				minimumVersion = 1.13.0;
 			};
 		};
+		1588C4FC25E54D9900FFE351 /* XCRemoteSwiftPackageReference "realm-cocoa" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/realm/realm-cocoa.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 10.6.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -433,6 +448,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 1535642625E460BD004838EC /* XCRemoteSwiftPackageReference "SkeletonView" */;
 			productName = SkeletonView;
+		};
+		1588C4FD25E54D9900FFE351 /* Realm */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1588C4FC25E54D9900FFE351 /* XCRemoteSwiftPackageReference "realm-cocoa" */;
+			productName = Realm;
+		};
+		1588C4FF25E54D9900FFE351 /* RealmSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1588C4FC25E54D9900FFE351 /* XCRemoteSwiftPackageReference "realm-cocoa" */;
+			productName = RealmSwift;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
