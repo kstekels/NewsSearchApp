@@ -1,0 +1,25 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "Gloss",
+        "repositoryURL": "https://github.com/hkellaway/Gloss.git",
+        "state": {
+          "branch": null,
+          "revision": "efd25964891ae8a9cfbe2345628ad02fcb9a105c",
+          "version": "3.2.1"
+        }
+      },
+      {
+        "package": "SkeletonView",
+        "repositoryURL": "https://github.com/Juanpe/SkeletonView.git",
+        "state": {
+          "branch": null,
+          "revision": "32ab6d3852e91312dcbfc3f3a749cfc691da75fe",
+          "version": "1.13.0"
+        }
+      }
+    ]
+  },
+  "version": 1
+}
