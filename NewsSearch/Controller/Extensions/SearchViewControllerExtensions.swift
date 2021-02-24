@@ -13,11 +13,11 @@ extension SearchViewController {
         dataPickerView.dataSource = self
         dataPickerView.delegate = self
         dataPickerView.delegate = self
-        selectedTopic = topics[0]
+        selectedTopic = storage.dataList[0]
         manualSearchTextField.placeholder = "Search by keywords here..."
         shortcutSearchButton.layer.cornerRadius = 15
         shortcutSearchButton.backgroundColor = .systemFill
-        searchButtonInfoLabel.text = "Search for:  \"\(selectedTopic.capitalized)\"? 🤔"
+        searchButtonInfoLabel.text = " "
     }
     //MARK: - Go to article detailed view - func
     func goToDetailedTableview() {
@@ -31,7 +31,7 @@ extension SearchViewController {
     
     //MARK: - Delete item from picker view - func
     func deleteItem() {
-        let deleteShortcutAlert = UIAlertController(title: "Delete", message: "Are you sure you want to Delete this shortcut? 💁‍♂️ \n(If you want to \"Cancel\", just press on \"Delete\" button with empty text box!", preferredStyle: .alert)
+        let deleteShortcutAlert = UIAlertController(title: "Delete", message: "Are you sure you want to Delete \"\(selectedTopic)\"? 🤭 \n(If you want to \"Cancel\", leave the text field empty and just press on \"Delete\" button!", preferredStyle: .alert)
         var deleteTextField: UITextField!
         
         deleteShortcutAlert.addTextField { textField in
@@ -41,13 +41,21 @@ extension SearchViewController {
         let addAction = UIAlertAction(title: "Delete -> 🗑?", style: .destructive) { [self] _ in
             
             if deleteTextField.text?.lowercased() == "delete"{
-                var itemToDelete = self.topics.firstIndex(of: selectedTopic)
+                var itemToDelete = self.storage.dataList.firstIndex(of: selectedTopic)
                 if itemToDelete == nil{
                     itemToDelete = saveLastIndex
                 }else{
                     self.saveLastIndex = itemToDelete!
                 }
-                self.topics.remove(at: (itemToDelete!))
+                self.storage.dataList.remove(at: (itemToDelete!))
+                storage.deleteKeywords()
+                
+                for item in storage.dataList{
+                    let keyword = Keyword()
+                    keyword.keyName = item
+                    self.storage.saveKeywords(keyword)
+                }
+                
                 self.dataPickerView.reloadAllComponents()
                 
             }else{
@@ -67,12 +75,15 @@ extension SearchViewController {
         
         let addAction = UIAlertAction(title: "Add", style: .default) { [self] _ in
             guard let newItem = shortcutTextField.text, !newItem.isEmpty else { return }
-            
-            if self.topics.contains(newItem.lowercased()) {
+            #warning("storage")
+            if self.storage.dataList.contains(newItem.lowercased()) {
                 print("Element already exist!")
             }else{
-                self.topics.append(newItem.lowercased())
-                self.topics.sort()
+                let keyword = Keyword()
+                self.storage.dataList.append(newItem.lowercased())
+//                self.storage.dataList.sort()
+                keyword.keyName = newItem.lowercased()
+                self.storage.saveKeywords(keyword)
                 self.dataPickerView.reloadAllComponents()
                 print("Element is added to list")
             }
@@ -88,28 +99,5 @@ extension SearchViewController {
         }
         
         present(addShortcutAlert, animated: true)
-    }
-    
-    //MARK: - Update label under picker view
-    func pickerSelected() {
-        searchButtonInfoLabel.text = "Search for:  \"\(selectedTopic.capitalized)\"? 🤔"
-    }
-    
-    //MARK: - Picker view - func
-    func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        return 1
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return topics.count
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return topics[row].capitalized
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        selectedTopic = self.topics[row]
-        pickerSelected()
     }
 }

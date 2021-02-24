@@ -6,11 +6,14 @@
 //
 
 import UIKit
+import RealmSwift
 
 class SearchViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, UITextFieldDelegate {
+    
+    let storage = StorageManager()
 
     //MARK: - Variables && Outlets
-    var topics = ["bitcoin", "apple", "tesla", "bmw", "volvo", "audi", "amazon", "telegram", "facebook", "whatsapp", "windows", "android "].sorted()
+//    var topics = ["bitcoin", "apple", "tesla", "bmw", "volvo", "audi", "amazon", "telegram", "facebook", "whatsapp", "windows", "android "].sorted()
     
     var selectedTopic = String()
     var saveLastIndex = 0
@@ -24,7 +27,9 @@ class SearchViewController: UIViewController, UIPickerViewDataSource, UIPickerVi
     //MARK: - View Did Load
     override func viewDidLoad() {
         super.viewDidLoad()
+        print(Realm.Configuration.defaultConfiguration.fileURL!)
         setupView()
+        storage.loadKeywords()
     }
 
     //MARK: - View will appear

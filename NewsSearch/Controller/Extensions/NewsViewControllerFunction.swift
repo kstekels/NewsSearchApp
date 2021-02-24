@@ -26,7 +26,7 @@ extension NewsViewController {
     //MARK: - self.title Animation
     func animatedTitle(){
         if !animationIsShowedOnce{
-            Timer.scheduledTimer(withTimeInterval: 0.1, repeats: false) { (timer) in
+            Timer.scheduledTimer(withTimeInterval: 1, repeats: false) { (timer) in
                 self.title = ""
                 var charIndex = 0.0
                 if self.totalResult > 0{
