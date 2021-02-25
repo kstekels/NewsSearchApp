@@ -32,6 +32,7 @@ class SearchViewController: UIViewController, UIPickerViewDataSource, UIPickerVi
     //MARK: - View Did Load
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.title = "Search news"
         print(Realm.Configuration.defaultConfiguration.fileURL!)
         setupView()
         storage.loadKeywords()
@@ -57,6 +58,15 @@ class SearchViewController: UIViewController, UIPickerViewDataSource, UIPickerVi
     //MARK: - Search buttons
     @IBAction func manualSearchButtonPressed(_ sender: Any) {
         textfieldActionManager()
+    }
+    
+    //MARK: - Info
+    
+    @IBAction func infoButtonPressed(_ sender: Any) {
+        let alert = UIAlertController(title: "Info!", message: "In this App you can search news by typing keywords in text field.\nAlternitive way is to use shortcuts!\nTo add new shortcut, press \"✚\"!\nIf you want delete shortcuts, just pick what you want to delete from picker view and press on trash can!\n", preferredStyle: .alert)
+        let close = UIAlertAction(title: "Close", style: .cancel, handler: nil)
+        alert.addAction(close)
+        present(alert, animated: true)
     }
     
     

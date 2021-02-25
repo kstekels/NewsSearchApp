@@ -17,20 +17,20 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="p2A-Fp-1N7">
-                                <rect key="frame" x="127" y="368" width="160" height="160"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="O6N-pQ-dLf">
+                                <rect key="frame" x="87" y="326" width="240" height="244"/>
+                                <color key="tintColor" systemColor="tertiarySystemBackgroundColor"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="160" id="Mdn-Cv-X8t"/>
-                                    <constraint firstAttribute="width" constant="160" id="ken-nI-VCu"/>
+                                    <constraint firstAttribute="width" constant="240" id="3zc-sZ-G2s"/>
+                                    <constraint firstAttribute="height" constant="240" id="eCG-4B-ZMq"/>
                                 </constraints>
-                                <imageReference key="image" image="newspaper" catalog="system" renderingMode="original"/>
+                                <imageReference key="image" image="network" catalog="system" symbolScale="large"/>
                             </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
-                        <color key="backgroundColor" systemColor="systemGrayColor"/>
                         <constraints>
-                            <constraint firstItem="p2A-Fp-1N7" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="FTG-1x-h6W"/>
-                            <constraint firstItem="p2A-Fp-1N7" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="xx6-cl-yip"/>
+                            <constraint firstItem="O6N-pQ-dLf" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="gzH-sT-q4b"/>
+                            <constraint firstItem="O6N-pQ-dLf" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="qEf-Jd-eGK"/>
                         </constraints>
                     </view>
                 </viewController>
@@ -40,9 +40,9 @@
         </scene>
     </scenes>
     <resources>
-        <image name="newspaper" catalog="system" width="128" height="108"/>
-        <systemColor name="systemGrayColor">
-            <color red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        <image name="network" catalog="system" width="128" height="121"/>
+        <systemColor name="tertiarySystemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
     </resources>
 </document>

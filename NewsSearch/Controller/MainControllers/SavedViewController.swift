@@ -26,6 +26,19 @@ class SavedViewController: UIViewController {
         updateView()
     }
     
+    @IBAction func backButton(_ sender: Any) {
+        self.navigationController?.popViewController(animated: true)
+    }
+    
+    
+    //MARK: - InfoButton
+    @IBAction func infoButtonPressed(_ sender: Any) {
+            let alert = UIAlertController(title: "Info!", message: "In this section you will find all saved articles!\nIf you want to delete them, then you must swipe from right to the left side on choosen article and tap delete!\nIf you want clear the library, then press on trash can, which located right upper corner!", preferredStyle: .alert)
+            let close = UIAlertAction(title: "Close", style: .cancel, handler: nil)
+            alert.addAction(close)
+            present(alert, animated: true)
+        }
+    
     @IBAction func deleteAllArticlesButton(_ sender: Any) {
         
         if storage.listOfArticleTitle.count != 0{

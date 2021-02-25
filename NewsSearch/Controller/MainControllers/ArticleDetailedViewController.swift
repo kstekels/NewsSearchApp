@@ -50,7 +50,7 @@ class ArticleDetailedViewController: UIViewController {
     func articleAlreadyExistAlert() {
         let alert  = UIAlertController(title: "Already in your collection!", message: "Article \"\(titleLabelText)\" is already saved in your library!", preferredStyle: .alert)
         
-        let goToSavedList = UIAlertAction(title: "Go", style: .default) { _ in
+        let goToSavedList = UIAlertAction(title: "Go to library", style: .default) { _ in
             let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
             guard let vc = storyboard.instantiateViewController(identifier: "SavedViewControllerID") as? SavedViewController else {
                 return
@@ -85,7 +85,6 @@ class ArticleDetailedViewController: UIViewController {
     func saveCurrentArticle() {
         
         let currentArticle = Article()
-        #warning("New list")
         
         currentArticle.image = articleImage?.pngData()
         currentArticle.url = urlStringForWeb

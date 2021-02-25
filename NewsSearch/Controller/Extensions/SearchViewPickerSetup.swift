@@ -22,6 +22,7 @@ extension SearchViewController {
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        storage.dataList.sort()
         return storage.dataList[row].capitalized
     }
     

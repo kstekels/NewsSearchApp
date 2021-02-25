@@ -20,7 +20,7 @@ extension NewsViewController {
         tableView.estimatedRowHeight = 100
         tableView.dataSource = self
         tableView.isSkeletonable = true
-        tableView.showAnimatedGradientSkeleton(usingGradient: .init(baseColor: .link), animation: nil, transition: .crossDissolve(0.25))
+        tableView.showAnimatedGradientSkeleton(usingGradient: .init(baseColor: .darkClouds), animation: nil, transition: .crossDissolve(0.25))
         
     }
     
@@ -31,7 +31,12 @@ extension NewsViewController {
                 self.title = ""
                 var charIndex = 0.0
                 if self.totalResult > 0{
-                    self.titleText = "\(self.newsTopic.capitalized)"
+                    if self.newsTopic.capitalized == "Apple" {
+                        self.titleText = "\(self.newsTopic.capitalized) 🍏"
+                    }else{
+                        self.titleText = "\(self.newsTopic.capitalized)"
+                    }
+                    
                 }else{
                     self.tableView.isHidden = true
                     self.ifNothingFound(for: "\(self.newsTopic.capitalized)")
