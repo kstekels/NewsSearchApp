@@ -8,18 +8,20 @@
 import UIKit
 
 class ArticleDetailedViewController: UIViewController {
-    
+        
     //MARK: - Variables && Outlets
     var titleLabelText = String()
     var articleImage: UIImage?
     var descriptionText = String()
     var urlStringForWeb = String()
+
     let storage = ArticleStorageManager()
     
     @IBOutlet weak var titleLabelTextView: UILabel!
     @IBOutlet weak var articleImageView: UIImageView!
     @IBOutlet weak var descriptionTextView: UITextView!
     @IBOutlet weak var readFullArticleButton: UIButton!
+    @IBOutlet weak var saveArticleButton: UIButton!
     
     //MARK: - View Did Load
     override func viewDidLoad() {
@@ -27,10 +29,39 @@ class ArticleDetailedViewController: UIViewController {
         setView()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        storage.loadArticle()
+    }
+    
     //MARK: - Save button for article
     @IBAction func saveArticleForLaterTapped(_ sender: Any) {
-        print("Save button")
-        saveAlert()
+        if !storage.listOfArticleTitle.contains(titleLabelText){
+            print("Save")
+            saveAlert()
+        }else{
+            print("Dismiss")
+            articleAlreadyExistAlert()
+        }
+        
+    }
+    
+
+    
+    func articleAlreadyExistAlert() {
+        let alert  = UIAlertController(title: "Already in your collection!", message: "Article \"\(titleLabelText)\" is already saved in your library!", preferredStyle: .alert)
+        
+        let goToSavedList = UIAlertAction(title: "Go", style: .default) { _ in
+            let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
+            guard let vc = storyboard.instantiateViewController(identifier: "SavedViewControllerID") as? SavedViewController else {
+                return
+            }
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
+        
+        let close = UIAlertAction(title: "Close", style: .destructive, handler: nil)
+        alert.addAction(close)
+        alert.addAction(goToSavedList)
+        present(alert, animated: true, completion: nil)
     }
     
     func saveAlert() {
@@ -54,13 +85,16 @@ class ArticleDetailedViewController: UIViewController {
     func saveCurrentArticle() {
         
         let currentArticle = Article()
+        #warning("New list")
+        
         currentArticle.image = articleImage?.pngData()
         currentArticle.url = urlStringForWeb
         currentArticle.title = titleLabelText
         storage.saveArticle(currentArticle)
         savedNotification()
-
         
+        storage.listOfArticleTitle.append(titleLabelText)
+
     }
     
 

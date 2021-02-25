@@ -14,7 +14,9 @@ extension SearchViewController {
         dataPickerView.delegate = self
         dataPickerView.delegate = self
         selectedTopic = storage.dataList[0]
-        manualSearchTextField.placeholder = "Search by keywords here..."
+        manualSearchTextField.placeholder = "Search news by keywords here..."
+//        manualSearchTextField.layer.cornerRadius = 15
+        manualSearchTextField.backgroundColor = .systemFill
         shortcutSearchButton.layer.cornerRadius = 15
         shortcutSearchButton.backgroundColor = .systemFill
         searchButtonInfoLabel.text = " "

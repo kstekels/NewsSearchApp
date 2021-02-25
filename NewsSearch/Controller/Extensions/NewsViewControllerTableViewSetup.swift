@@ -19,6 +19,10 @@ extension NewsViewController: UITableViewDelegate, SkeletonTableViewDataSource {
     func collectionSkeletonView(_ skeletonView: UITableView, cellIdentifierForRowAt indexPath: IndexPath) -> ReusableCellIdentifier {
         "NewsCell"
     }
+    
+    func collectionSkeletonView(_ skeletonView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 12
+    }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "NewsCell", for: indexPath) as? NewsTableViewCell else { return UITableViewCell() }
@@ -33,7 +37,6 @@ extension NewsViewController: UITableViewDelegate, SkeletonTableViewDataSource {
         if items.count == 0 {
             self.presentingViewController?.dismiss(animated: true)
         }
-        print(ArticleStorageManager().listOfArticleTitle)
         return cell
     }
     
@@ -42,7 +45,6 @@ extension NewsViewController: UITableViewDelegate, SkeletonTableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
         let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
         guard let vc = storyboard.instantiateViewController(identifier: "ArticleDetailedViewControllerID") as? ArticleDetailedViewController else {
             return

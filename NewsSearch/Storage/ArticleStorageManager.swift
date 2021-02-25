@@ -32,6 +32,7 @@ class ArticleStorageManager {
                 listOfArticleTitle.append(articleTitle)
                 listOfArticleImages.append(UIImage(data: articleImage!)!)
             }
+            print(listOfArticleTitle)
             
         }
 

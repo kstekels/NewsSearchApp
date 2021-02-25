@@ -14,7 +14,10 @@ extension ArticleDetailedViewController {
         titleLabelTextView.numberOfLines = 0
         articleImageView.image = articleImage
         descriptionTextView.text = descriptionText
+        
         readFullArticleButton.layer.cornerRadius = 15
         readFullArticleButton.backgroundColor = .systemFill
+        saveArticleButton.layer.cornerRadius = 15
+        saveArticleButton.backgroundColor = .systemFill
     }
 }

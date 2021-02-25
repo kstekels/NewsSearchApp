@@ -52,7 +52,7 @@ class Items: JSONDecodable {
     func compressedImage() -> UIImage {
         let returnImage = UIImage(named: "Noimage")
         
-        guard let url = URL(string: urlToImage) else {
+        guard URL(string: urlToImage) != nil else {
             return returnImage!
         }
         

@@ -12,12 +12,13 @@ import RealmSwift
 class SearchViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, UITextFieldDelegate {
     
     let storage = StorageManager()
+    let articleStorage = ArticleStorageManager()
 
     //MARK: - Variables && Outlets
     
     var selectedTopic = String()
     var saveLastIndex = 0
-    
+
     let notificationCenter = NotificationCenter.default
     let userDefaults = UserDefaults.standard
     
@@ -27,6 +28,7 @@ class SearchViewController: UIViewController, UIPickerViewDataSource, UIPickerVi
     @IBOutlet weak var keywordSearchButton: UIButton!
     @IBOutlet weak var searchButtonInfoLabel: UILabel!
     
+
     //MARK: - View Did Load
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,12 +40,13 @@ class SearchViewController: UIViewController, UIPickerViewDataSource, UIPickerVi
         notificationCenter.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
         
     }
+    
 
     //MARK: - View will appear
     override func viewWillAppear(_ animated: Bool) {
         manualSearchTextField.text = nil
-        shortcutSearchButton.isEnabled = false
         view.endEditing(true)
+        
     }
     
     @IBAction func primarryActionTriggered(_ sender: Any) {
@@ -87,19 +90,12 @@ class SearchViewController: UIViewController, UIPickerViewDataSource, UIPickerVi
     @objc func keyboardWillShow(notification: Notification){
         if self.view.frame.origin.y == 0 {
             self.view.frame.origin.y -= 10
-            
-            let titleView = UIView(frame: CGRect(x: 0, y: 0, width: 40, height: 25))
-            let titleImageView = UIImageView(image: UIImage(systemName: "keyboard"))
-            titleImageView.frame = CGRect(x: 0, y: 0, width: titleView.frame.width, height: titleView.frame.height)
-            titleView.addSubview(titleImageView)
-            navigationItem.titleView = titleView
         }
     }
 
     @objc func keyboardWillHide(notification: Notification){
         if self.view.frame.origin.y != 0 {
             self.view.frame.origin.y += 10
-            navigationItem.titleView?.isHidden = true
         }
     }
 
@@ -107,6 +103,7 @@ class SearchViewController: UIViewController, UIPickerViewDataSource, UIPickerVi
         super.touchesBegan(touches, with: event)
         view.endEditing(true)
     }
+    
     
 
 }

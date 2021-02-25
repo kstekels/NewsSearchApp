@@ -16,7 +16,7 @@ class SavedViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-//        self.title = "Saved articles"
+        self.title = "Saved articles"
         tableView.delegate = self
         tableView.dataSource = self
     }
@@ -25,6 +25,32 @@ class SavedViewController: UIViewController {
         storage.loadArticle()
         updateView()
     }
+    
+    @IBAction func deleteAllArticlesButton(_ sender: Any) {
+        
+        if storage.listOfArticleTitle.count != 0{
+            let alert = UIAlertController(title: "Delete All? 🤭", message: "Are you sure you want to delete all articles?", preferredStyle: .alert)
+            let cancel = UIAlertAction(title: "Cancel", style: .cancel)
+            let deleteAll = UIAlertAction(title: "Delete All", style: .destructive) { _ in
+                self.storage.deleteArticle()
+                print("All deleted")
+                self.storage.listOfArticleTitle.removeAll()
+                self.storage.listOfArticleUrl.removeAll()
+                self.storage.listOfArticleImages.removeAll()
+                self.updateView()
+            }
+            
+            alert.addAction(cancel)
+            alert.addAction(deleteAll)
+            present(alert, animated: true) { [self] in
+                updateView()
+            }
+        }
+        
+
+        
+    }
+    
     
     func updateView() {
         DispatchQueue.main.async {
