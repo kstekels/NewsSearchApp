@@ -27,10 +27,13 @@ extension SearchViewController {
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         selectedTopic = self.storage.dataList[row]
+        view.endEditing(true)
         if selectedTopic != " "{
             pickerSelected()
+            shortcutSearchButton.isEnabled = true
         }else{
             searchButtonInfoLabel.text = " "
+            shortcutSearchButton.isEnabled = false
         }
         
     }

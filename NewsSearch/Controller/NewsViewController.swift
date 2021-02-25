@@ -24,6 +24,7 @@ class NewsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNewsView()
+        
     }
 
     //MARK: - View Did Appear

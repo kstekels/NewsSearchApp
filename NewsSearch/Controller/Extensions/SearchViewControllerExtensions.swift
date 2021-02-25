@@ -18,7 +18,11 @@ extension SearchViewController {
         shortcutSearchButton.layer.cornerRadius = 15
         shortcutSearchButton.backgroundColor = .systemFill
         searchButtonInfoLabel.text = " "
+        shortcutSearchButton.isEnabled = false
     }
+    
+    
+    
     //MARK: - Go to article detailed view - func
     func goToDetailedTableview() {
         let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
@@ -60,9 +64,13 @@ extension SearchViewController {
                 
             }else{
                 deleteTextField.placeholder = "You must enter \"Delete\", to delete selected item!"
+                
             }
         }
+        
+        
         deleteShortcutAlert.addAction(addAction)
+        
         
         present(deleteShortcutAlert, animated: true, completion: nil)
         

@@ -12,6 +12,7 @@ import SkeletonView
 extension NewsViewController {
     //MARK: - Setup view
     func setupNewsView() {
+        self.title = "Loading..."
         tableView.delegate = self
         animationIsShowedOnce = false
         getDataFromJson()
@@ -20,7 +21,7 @@ extension NewsViewController {
         tableView.dataSource = self
         tableView.isSkeletonable = true
         tableView.showAnimatedGradientSkeleton(usingGradient: .init(baseColor: .link), animation: nil, transition: .crossDissolve(0.25))
-        self.title = "Loading..."
+        
     }
     
     //MARK: - self.title Animation
@@ -53,11 +54,8 @@ extension NewsViewController {
     func ifNothingFound(for search: String) {
         let alert = UIAlertController(title: "Sorry!", message: "We found nothing for: \"\(search)\"", preferredStyle: .alert)
         let closeAction = UIAlertAction(title: "Close", style: .default) { _ in
-            let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
-            guard let vc = storyboard.instantiateViewController(identifier: "SearchViewControllerID") as? SearchViewController else {
-                return
-            }
-            self.navigationController?.pushViewController(vc, animated: true)
+
+            self.navigationController?.popViewController(animated: true)
         }
         
         alert.addAction(closeAction)
@@ -68,7 +66,7 @@ extension NewsViewController {
 
     //MARK: - JSON data parsing
     func getDataFromJson() {
-        let jsonURL = "https://newsapi.org/v2/everything?q=\(newsTopic)&language=en&apiKey=a473de0095844441bc54bd266083c4f3"
+        let jsonURL = "https://newsapi.org/v2/everything?q=\(newsTopic)&language=en&apiKey=f9e63637b7244cf4bf5cc7501c5724e3"
         
         guard let url = URL(string: jsonURL) else {
             return

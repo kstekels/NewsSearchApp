@@ -33,6 +33,7 @@ extension NewsViewController: UITableViewDelegate, SkeletonTableViewDataSource {
         if items.count == 0 {
             self.presentingViewController?.dismiss(animated: true)
         }
+        print(ArticleStorageManager().listOfArticleTitle)
         return cell
     }
     
@@ -57,7 +58,7 @@ extension NewsViewController: UITableViewDelegate, SkeletonTableViewDataSource {
     
     //Animation for cells
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        let rotationTransform = CATransform3DTranslate(CATransform3DIdentity, -30, 50, 20)
+        let rotationTransform = CATransform3DTranslate(CATransform3DIdentity, 0, 50, 0)
         cell.layer.transform = rotationTransform
         cell.alpha = 0
         UIView.animate(withDuration: 0.75){
