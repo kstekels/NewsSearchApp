@@ -33,10 +33,12 @@ extension NewsViewController: UITableViewDelegate, SkeletonTableViewDataSource {
             cell.imageViewForCell.image = image
         }
         cell.titleLabelForCell.text = item.title
-
+        
+        //MARK: - Abort loading
         if items.count == 0 {
             self.presentingViewController?.dismiss(animated: true)
         }
+        
         return cell
     }
     
@@ -50,10 +52,10 @@ extension NewsViewController: UITableViewDelegate, SkeletonTableViewDataSource {
             return
         }
         
-        vc.articleImage = items[indexPath.row].image
-        vc.descriptionText = items[indexPath.row].description
-        vc.titleLabelText = items[indexPath.row].title
-        vc.urlStringForWeb = items[indexPath.row].url
+        vc.articleImage     = items[indexPath.row].image
+        vc.descriptionText  = items[indexPath.row].description
+        vc.titleLabelText   = items[indexPath.row].title
+        vc.urlStringForWeb  = items[indexPath.row].url
     
         navigationController?.pushViewController(vc, animated: true)
     }

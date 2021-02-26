@@ -11,9 +11,9 @@ import UIKit
 class ArticleStorageManager {
     let realm = try! Realm()
     
-    var listOfArticleTitle: [String] = []
-    var listOfArticleImages: [UIImage] = []
-    var listOfArticleUrl: [String] = []
+    var listOfArticleTitle:     [String] = []
+    var listOfArticleImages:    [UIImage] = []
+    var listOfArticleUrl:       [String] = []
         
     func deleteArticle() {
         realm.beginWrite()
@@ -24,16 +24,16 @@ class ArticleStorageManager {
     func loadArticle() {
         let articles = realm.objects(Article.self)
         for article in articles {
-            let articleTitle = article.title
-            let articleURL = article.url
-            let articleImage = article.image
+            
+            let articleTitle    = article.title
+            let articleURL      = article.url
+            let articleImage    = article.image
+            
             if !listOfArticleTitle.contains(articleTitle) {
                 listOfArticleUrl.append(articleURL)
                 listOfArticleTitle.append(articleTitle)
                 listOfArticleImages.append(UIImage(data: articleImage!)!)
             }
-            print(listOfArticleTitle)
-            
         }
 
     }

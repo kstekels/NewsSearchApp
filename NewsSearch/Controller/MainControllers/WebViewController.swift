@@ -16,9 +16,9 @@ class WebViewController: UIViewController, WKNavigationDelegate {
     
     //MARK: - Load View
     override func loadView() {
-        webKit = WKWebView()
-        webKit.navigationDelegate = self
-        view = webKit
+        webKit                      = WKWebView()
+        webKit.navigationDelegate   = self
+        view                        = webKit
     }
     
     //MARK: - View Did load

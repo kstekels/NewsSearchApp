@@ -167,19 +167,12 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="Qr3-tC-77U">
-                        <leftBarButtonItems>
-                            <barButtonItem image="arrowshape.turn.up.backward" catalog="system" id="lqm-xT-n9R">
-                                <connections>
-                                    <action selector="backButton:" destination="4Gu-4b-BjX" id="QSL-E8-P5H"/>
-                                </connections>
-                            </barButtonItem>
-                            <barButtonItem id="bz4-4r-uOh">
-                                <imageReference key="image" image="info.circle" catalog="system" symbolScale="large"/>
-                                <connections>
-                                    <action selector="infoButtonPressed:" destination="4Gu-4b-BjX" id="IRQ-Wc-66P"/>
-                                </connections>
-                            </barButtonItem>
-                        </leftBarButtonItems>
+                        <barButtonItem key="leftBarButtonItem" id="bz4-4r-uOh">
+                            <imageReference key="image" image="info.circle" catalog="system" symbolScale="large"/>
+                            <connections>
+                                <action selector="infoButtonPressed:" destination="4Gu-4b-BjX" id="IRQ-Wc-66P"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" id="hEs-By-qUp">
                             <imageReference key="image" image="trash.circle" catalog="system" symbolScale="large" renderingMode="template"/>
                             <color key="tintColor" systemColor="systemRedColor"/>
@@ -435,6 +428,7 @@
                             <constraint firstItem="qsQ-FR-Enx" firstAttribute="top" secondItem="bkr-vb-RSM" secondAttribute="top" id="wzO-Ai-iYk"/>
                         </constraints>
                     </view>
+                    <nil key="simulatedTopBarMetrics"/>
                     <connections>
                         <outlet property="webKit" destination="qsQ-FR-Enx" id="dBq-eE-SIP"/>
                     </connections>
@@ -492,7 +486,7 @@
                     </tabBarItem>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="d2P-p3-Kup">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -506,7 +500,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="arrowshape.turn.up.backward" catalog="system" width="128" height="106"/>
         <image name="bookmark.fill" catalog="system" width="112" height="128"/>
         <image name="chevron.right.circle" catalog="system" width="128" height="121"/>
         <image name="doc.badge.plus" catalog="system" width="119" height="128"/>

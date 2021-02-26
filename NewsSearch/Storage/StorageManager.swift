@@ -23,12 +23,10 @@ class StorageManager {
         let keys = realm.objects(Keyword.self)
         for key in keys {
             let shortcut = key.keyName
-            print(shortcut)
             if !dataList.contains(shortcut){
                 dataList.append(shortcut)
             }
             dataList.sort()
-            print(dataList)
         }
     }
     

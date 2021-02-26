@@ -10,8 +10,8 @@ import UIKit
 class NewsTableViewCell: UITableViewCell {
 
     //MARK: - Outlets
-    @IBOutlet weak var titleLabelForCell: UILabel!
-    @IBOutlet weak var imageViewForCell: UIImageView!
+    @IBOutlet weak var titleLabelForCell:   UILabel!
+    @IBOutlet weak var imageViewForCell:    UIImageView!
     
     override func awakeFromNib() {
         super.awakeFromNib()

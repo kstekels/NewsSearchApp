@@ -12,16 +12,16 @@ import SkeletonView
 extension NewsViewController {
     //MARK: - Setup view
     func setupNewsView() {
-        self.title = "Loading..."
-        tableView.delegate = self
-        animationIsShowedOnce = false
+        self.title                      = "Loading..."
+        tableView.delegate              = self
+        tableView.dataSource            = self
+        tableView.isSkeletonable        = true
+        animationIsShowedOnce           = false
         getDataFromJson()
-        tableView.rowHeight = 100
-        tableView.estimatedRowHeight = 100
-        tableView.dataSource = self
-        tableView.isSkeletonable = true
+        tableView.rowHeight             = 100
+        tableView.estimatedRowHeight    = 100
+
         tableView.showAnimatedGradientSkeleton(usingGradient: .init(baseColor: .darkClouds), animation: nil, transition: .crossDissolve(0.25))
-        
     }
     
     //MARK: - self.title Animation
@@ -57,21 +57,19 @@ extension NewsViewController {
 
     //MARK: - No result is found - func
     func ifNothingFound(for search: String) {
-        let alert = UIAlertController(title: "Sorry!", message: "We found nothing for: \"\(search)\"", preferredStyle: .alert)
+        let alert = UIAlertController(title: "404. Page not Found", message: "Article:  \"\(search)\" not found", preferredStyle: .alert)
         let closeAction = UIAlertAction(title: "Close", style: .default) { _ in
 
             self.navigationController?.popViewController(animated: true)
         }
-        
         alert.addAction(closeAction)
-        
         present(alert, animated: true)
         
     }
 
     //MARK: - JSON data parsing
     func getDataFromJson() {
-        let jsonURL = "https://newsapi.org/v2/everything?q=\(newsTopic)&language=en&apiKey=f9e63637b7244cf4bf5cc7501c5724e3"
+        let jsonURL = "https://newsapi.org/v2/everything?q=\(newsTopic)&language=en&apiKey=a473de0095844441bc54bd266083c4f3"
         
         guard let url = URL(string: jsonURL) else {
             return
@@ -80,7 +78,6 @@ extension NewsViewController {
         var urlRequest = URLRequest(url: url)
         urlRequest.httpMethod = "GET"
         urlRequest.setValue("application/json", forHTTPHeaderField: "Content-type")
-        
         let session = URLSession(configuration: URLSessionConfiguration.default)
         let task = session.dataTask(with: urlRequest) { [self] (data, response, error) in
             
@@ -100,7 +97,7 @@ extension NewsViewController {
                     self.populateData(dictData)
                 }
             }catch{
-                print("Error coverting JSON")
+                print("Error converting JSON")
             }
         }
         task.resume()
@@ -108,6 +105,7 @@ extension NewsViewController {
     
     //MARK: - Populate Data
     func populateData(_ dict: [String: Any]){
+        
         guard let responseDict = dict["articles"] as? [Gloss.JSON] else {
             return
         }

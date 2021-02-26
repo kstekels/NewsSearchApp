@@ -10,9 +10,9 @@ import Foundation
 import UIKit
 
 class Article: Object {
-    @objc dynamic var title: String = ""
-    @objc dynamic var url: String = ""
-    @objc dynamic var image: Data? = nil
+    @objc dynamic var title:    String = ""
+    @objc dynamic var url:      String = ""
+    @objc dynamic var image:    Data? = nil
     
     
 }

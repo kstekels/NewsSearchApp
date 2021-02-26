@@ -19,34 +19,17 @@ class Items: JSONDecodable {
     var image: UIImage?
     
     required init?(json: JSON) {
-        self.status = "status" <~~ json ?? ""
-        self.title = "title" <~~ json ?? ""
-        self.description = "description" <~~ json ?? ""
-        self.url = "url" <~~ json ?? ""
-        self.name = "name" <~~ json ?? ""
-        self.urlToImage = "urlToImage" <~~ json ?? ""
+        self.status =       "status" <~~ json ?? ""
+        self.title =        "title" <~~ json ?? ""
+        self.description =  "description" <~~ json ?? ""
+        self.url =          "url" <~~ json ?? ""
+        self.name =         "name" <~~ json ?? ""
+        self.urlToImage =   "urlToImage" <~~ json ?? ""
         
         DispatchQueue.main.async {
-//            self.image = self.loadImage()
             self.image = self.compressedImage()
         }
     }
-    
-    //MARK: - Old Code for image
-//    private func loadImage() -> UIImage? {
-//        var returnImage: UIImage?
-//
-//        guard let url = URL(string: urlToImage) else {
-//            return returnImage
-//        }
-//
-//        if let data = try? Data(contentsOf: url) {
-//            if let image = UIImage(data: data){
-//                returnImage = image
-//            }
-//        }
-//        return returnImage
-//    }
     
     //MARK: - Solution from Stack Overflow
     func compressedImage() -> UIImage {
@@ -55,19 +38,15 @@ class Items: JSONDecodable {
         guard URL(string: urlToImage) != nil else {
             return returnImage!
         }
-        
+    
         let image = UIImage(data: try! Data(contentsOf: URL(string: urlToImage)!))
-        
         guard image != nil else {
             return returnImage!
         }
         
         let thumb = image?.resized(withPercentage: 0.40)
         return thumb!
-
-        
     }
-
 }
 
 //MARK: - Stack Overflow
